@@ -6,11 +6,11 @@ Studi kasus tugas kelompok mata kuliah Praktik Pemrograman Back End (D3 Teknik I
 
 | Anggota | Bagian |
 |---|---|
-| FauZee | Soal 1, 4 (Latihan) |
-| lelyonn | Soal 2, 3 (Latihan) |
-| shirarta | Soal 5, 6 (Latihan) |
-| zakinurrohimm | Soal 7, 9 (Latihan) |
-| _(anggota 5)_ | Soal 8, 10 (Latihan) |
+| Fauzi | Soal 1, 4 (Latihan) |
+| Leon | Soal 2, 3 (Latihan) |
+| Shira | Soal 5, 6 (Latihan) |
+| Zaki | Soal 7, 9 (Latihan) |
+| Fauzan | Soal 8, 10 (Latihan) |
 
 ## Menjalankan Proyek
 
