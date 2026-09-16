@@ -18,6 +18,9 @@ Route::prefix('v1/perpus')
     ->middleware('anggota')
     ->group(function () {
 
+        Route::get('/statistik', [StatistikController::class, 'index'])
+            ->name('statistik.index');
+
         Route::get('/buku', [BukuController::class, 'index'])
             ->name('buku.index');
 
