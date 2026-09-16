@@ -45,6 +45,9 @@ Route::prefix('v1/perpus')
             ->where('id', 'PJM-[0-9]{8}-[0-9]{4}')
             ->name('peminjaman.perpanjang');
 
+        Route::post('/pratinjau', [PeminjamanController::class, 'pratinjau'])
+            ->name('pratinjau');
+
         Route::prefix('laporan')->name('laporan.')->group(function () {
             Route::get('/denda-harian', [LaporanController::class, 'dendaHarian'])
                 ->middleware('peran:petugas')

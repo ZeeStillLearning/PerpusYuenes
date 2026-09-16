@@ -65,4 +65,17 @@ final class PeminjamanController extends Controller
             'data' => $this->peminjaman->perpanjang($id),
         ]);
     }
+
+    public function pratinjau(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'isbn' => ['required', 'string'],
+        ]);
+
+        $pengguna = $request->attributes->get('pengguna');
+
+        $rincian = $this->peminjaman->pratinjau($data['isbn'], $pengguna['nama']);
+
+        return response()->json(['data' => $rincian]);
+    }
 }
