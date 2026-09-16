@@ -11,7 +11,9 @@ Route::get('/ping', fn() => response()->json([
     'status' => 'ok',
     'perpustakaan' => config('perpus.nama_perpustakaan'),
     'waktu' => now()->toIso8601String(),
-]))->name('api.ping');
+]))
+    ->name('api.ping')
+    ->middleware('user-agent');
 
 Route::prefix('v1/perpus')
     ->name('api.v1.perpus.')
