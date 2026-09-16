@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: ./docker/php
+    container_name: perpus-app
+    volumes:
+      - ./src:/var/www
+    working_dir: /var/www
+    ports:
+       - "8080:8000"
+    tty: true
+    command: >
+      sh -c "if [ ! -f artisan ]; then
+               composer create-project laravel/laravel:^13.0 . ;
+             fi &&
+             php artisan serve --host=0.0.0.0 --port=8000"
