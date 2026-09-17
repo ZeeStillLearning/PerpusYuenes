@@ -11,16 +11,15 @@ Route::get('/ping', fn() => response()->json([
     'status' => 'ok',
     'perpustakaan' => config('perpus.nama_perpustakaan'),
     'waktu' => now()->toIso8601String(),
-]))->name('api.ping');
+]))
+    ->name('api.ping')
+    ->middleware('user-agent');
 
 Route::prefix('v1/perpus')
     ->name('api.v1.perpus.')
     ->middleware('anggota')
     ->group(function () {
-
-        Route::get('/statistik', [StatistikController::class, 'index'])
-            ->name('statistik.index');
-
+        
         Route::get('/buku', [BukuController::class, 'index'])
             ->name('buku.index');
 
@@ -47,6 +46,9 @@ Route::prefix('v1/perpus')
         Route::post('/peminjaman/{id}/perpanjang', [PeminjamanController::class, 'perpanjang'])
             ->where('id', 'PJM-[0-9]{8}-[0-9]{4}')
             ->name('peminjaman.perpanjang');
+
+        Route::post('/pratinjau', [PeminjamanController::class, 'pratinjau'])
+            ->name('pratinjau');
 
         Route::prefix('laporan')->name('laporan.')->group(function () {
             Route::get('/denda-harian', [LaporanController::class, 'dendaHarian'])

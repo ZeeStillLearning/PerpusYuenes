@@ -44,4 +44,9 @@ return [
             'peran' => 'petugas',
         ],
     ],
+
+    'premium' => [
+        'daftar_anggota' => explode(',', (string) env('PERPUS_ANGGOTA_PREMIUM', 'Rani Wulandari')),
+        'bonus_hari' => (int) env('PERPUS_PREMIUM_BONUS_HARI', 3),
+    ],
 ];

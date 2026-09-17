@@ -219,4 +219,49 @@ final class LayananPeminjaman
 
         return sprintf('PJM-%s-%04d', $tanggal, $urut);
     }
+
+    /**
+     * Pratinjau peminjaman: mengecek seluruh syarat (stok, batas pinjam,
+     * denda belum lunas) dan menghitung jatuh tempo TANPA menyimpan data.
+     * Dipakai ulang oleh endpoint pratinjau maupun disisipkan ke pinjam()
+     * kalau suatu saat perlu -- sama seperti pola hitung() di LayananKasir.
+     *
+     * @return array<string, mixed>
+     */
+    public function pratinjau(string $isbn, string $anggota): array
+    {
+        $buku = $this->buku->cariIsbn($isbn);
+
+        if ($buku === null) {
+            throw new BukuTidakDitemukan($isbn);
+        }
+
+        if ($buku['stok'] <= 0) {
+            throw new StokTidakTersedia($isbn);
+        }
+
+        $aktif = $this->peminjamanAktifAnggota($anggota);
+        $batasPinjam = (int) config('perpus.batas_pinjam');
+        if (count($aktif) >= $batasPinjam) {
+            throw new BatasPinjamTercapai($batasPinjam);
+        }
+
+        $totalDenda = $this->totalDendaBelumLunas($anggota);
+        if ($totalDenda->rupiah > 0) {
+            throw new DendaBelumLunas($totalDenda->rupiah);
+        }
+
+        $lamaPinjam = (int) config('perpus.lama_pinjam_hari');
+        $jatuhTempo = now()->copy()->addDays($lamaPinjam);
+
+        return [
+            'isbn' => $buku['isbn'],
+            'judul_buku' => $buku['judul'],
+            'anggota' => $anggota,
+            'jatuh_tempo_estimasi' => $jatuhTempo->toIso8601String(),
+            'peminjaman_aktif_saat_ini' => count($aktif),
+            'batas_pinjam' => $batasPinjam,
+            'boleh_pinjam' => true,
+        ];
+    }
 }
