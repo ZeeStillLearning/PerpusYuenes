@@ -252,6 +252,10 @@ final class LayananPeminjaman
         }
 
         $lamaPinjam = (int) config('perpus.lama_pinjam_hari');
+
+        if (in_array($anggota, (array) config('perpus.premium.daftar_anggota'), true)) {
+            $lamaPinjam += (int) config('perpus.premium.bonus_hari');
+        }
         $jatuhTempo = now()->copy()->addDays($lamaPinjam);
 
         return [
