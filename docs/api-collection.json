@@ -91,6 +91,21 @@
         "header": [{ "key": "X-API-Key", "value": "{{petugas_key}}" }],
         "url": "{{base_url}}/v1/perpus/laporan/terpopuler"
       }
+    },
+    {
+      "name": "Pratinjau Peminjaman",
+      "request": {
+      "method": "POST",
+      "header": [
+        { "key": "X-API-Key", "value": "{{anggota_key}}" },
+        { "key": "Content-Type", "value": "application/json" }
+      ],
+        "body": {
+        "mode": "raw",
+        "raw": "{\"isbn\":\"ISBN-002\"}"
+      },
+        "url": "{{base_url}}/v1/perpus/pratinjau"
+      }
     }
   ]
 }
