@@ -25,7 +25,9 @@ final class CatatRequest
         $durasiMs = round((microtime(true) - $mulai) * 1000, 2);
         $status = $response->getStatusCode();
 
-        logger()->info('PERPUS.HTTP', [
+        if ($durasiMs > self::AMBANG_DURASI_MS || $status >= 400) {
+            logger()->info('PERPUS.HTTP', [...]);
+        }
             'id' => $idRequest,
             'method' => $request->method(),
             'uri' => $request->path(),
